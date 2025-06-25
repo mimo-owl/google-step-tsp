@@ -40,6 +40,12 @@ sample/random   :  347392.97
 sample/greedy   :   25331.84
 sample/sa       :   21119.55
 
+Challenge 6
+output          :   42641.33
+sample/random   : 1374393.14
+sample/greedy   :   49892.05
+sample/sa       :   44393.89
+
 
 ## 実装の説明
 実装は、`solver_2opt.py`に行いました。
