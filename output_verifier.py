@@ -22,7 +22,20 @@ def verify_output():
                 lines = f.readlines()
                 assert lines[0].strip() == 'index'
                 tour = [int(i.strip()) for i in lines[1:N + 1]]
-            assert set(tour) == set(range(N))
+
+            expected = set(range(N))
+            actual = set(tour)
+
+            if expected != actual:
+                missing = expected - actual
+                duplicated = [node for node in tour if tour.count(node) > 1]
+                raise ValueError(
+                    f"\n[Error] {output_file}\n"
+                    f"  - Missing nodes: {missing if missing else 'None'}\n"
+                    f"  - Duplicated nodes: {duplicated if duplicated else 'None'}"
+                )
+
+            # assert set(tour) == set(range(N))
             path_length = sum(distance(cities[tour[i]], cities[tour[(i + 1) % N]])
                               for i in range(N))
             print(f'{output_prefix:16}: {path_length:>10.2f}')
