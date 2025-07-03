@@ -117,8 +117,8 @@ Iteration 7: Tour length = 91581.71
 ...
 
 結果：
-現在実行中（だが、Challenge2 の結果に基づくと、2段階の時よりも長くなってしまうかもしれない）
-
+Challenge 7
+output          :   84190.72
 
 
 実行方法：
