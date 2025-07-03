@@ -22,33 +22,12 @@ def two_opt_swap(route, i, k):
     new_route  = route[:i] + route[i:k+1][::-1] + route[k+1:] # iより前と、kより後は変更なし。i~kの部分だけ、順番を反転させる
     return new_route
 
-# def two_opt(tour, cities):
-#     num_cities = len(cities)
-#     best_route = tour[:]
-#     can_improve = True
-
-#     # 改善の余地がある限り、次の処理を実行
-#     while can_improve:
-#         can_improve = False
-#         for i in range(1, num_cities - 1):
-#             for j in range(i + 1, num_cities):
-#                 dist_ij = distance(cities[best_route[i]], cities[best_route[j]])
-#                 print(f"Distance between city {best_route[i]} and city {best_route[j]}: {dist_ij:.4f}")
-#                 # 現時点でのベストルートについて、ノードiとjの間のルートを反転させる
-#                 new_route = two_opt_swap(best_route, i, j)
-#                 # swap前後で総距離を比較し、より短くなっていたらそれをベストルートとして更新
-#                 if total_distance(new_route, cities) < total_distance(best_route, cities):
-#                     best_route = new_route[:]
-#                     can_improve = True
-#         tour = best_route[:]
-#     return best_route
 
 def two_opt(tour, cities, threshold=100):
     num_cities = len(cities)
     best_route = tour[:]
     can_improve = True
 
-    # improvements_euclid = []  # 直線距離横軸
     improvements_path = []    # ルート距離横軸
 
     while can_improve:
@@ -68,6 +47,7 @@ def two_opt(tour, cities, threshold=100):
                 # 反転した結果が改善されていればベストルートとして更新
                 if after < before:
                     improvement_ratio = after / before * 100
+                    # 閾値が設定されている場合、短縮の度合いが閾値より大きい（つまり改善度合いが小さい）ものは無視する
                     if threshold != 100:
                         if improvement_ratio > threshold:
                             continue
@@ -76,7 +56,6 @@ def two_opt(tour, cities, threshold=100):
                     best_route = new_route[:]
                     can_improve = True
 
-                    # improvement_ratio = after / before * 100
                     path_width = before  # i, j 間の元のルートの長さ
 
                     if len(improvements_path) < 1000:
@@ -105,9 +84,6 @@ if __name__ == '__main__':
     two_opt_full_tour, improvements_path = two_opt(two_opt_limited_tour, read_input(sys.argv[1]), threshold=100)
 
 
-    # optimized_tour, improvements_path = two_opt(tour, read_input(sys.argv[1]))
-    # print_tour(optimized_tour)
-
     output_file_path = f'output_{challenge_number}.csv'
     # output_file_path = f'output_8.csv'
     with open(output_file_path, 'w') as f:
@@ -115,6 +91,7 @@ if __name__ == '__main__':
 
     print(f"Result has been saved to: {output_file_path}")
 
+    # グラフを表示　
     if improvements_path:
         x2 = [w for (w, r) in improvements_path]
         y2 = [r for (w, r) in improvements_path]
