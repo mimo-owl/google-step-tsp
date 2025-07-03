@@ -120,6 +120,7 @@ Iteration 7: Tour length = 91581.71
 Challenge 7
 output          :   84190.72
 
+![2-opt improvement graph](multi_opt_inp7.png)
 
 実行方法：
 ```bash
